@@ -10,6 +10,7 @@ read -e -p "Mount sd card and save pictures to it? (y/n) " -i "y" MOUNT
 read -e -p "How many pictures in the series? " -i "75" NUMBER_OF_PICS
 read -e -p "How many seconds to leave the shutter open? " -i "30s" SHUTTER_OPEN_SECS
 read -e -p "How many seconds to wait between pictures? " -i "35" WAIT
+
 # adjust wait time to allow some delay for transfering picture off camera.  ~6 seconds in testing
 WAIT=$((WAIT-6))
 
@@ -21,9 +22,9 @@ echo ""
 sudo gphoto2 --get-config /main/imgsettings/iso
 read -e -p "ISO setting? " -i "4" ISO
 
-#sudo gphoto2 --set-config shutterspeed=bulb
-#sudo gphoto2 --set-config-index /main/capturesettings/aperture=$APERTURE
-#sudo gphoto2 --set-config-index /main/imgsettings/iso=$ISO
+sudo gphoto2 --set-config shutterspeed=bulb
+sudo gphoto2 --set-config-index /main/capturesettings/aperture=$APERTURE
+sudo gphoto2 --set-config-index /main/imgsettings/iso=$ISO
 
 if [ "$MOUNT" == y ]; then 
     sudo mount /dev/mmcblk1p1 /home/tomc/pictures
@@ -35,6 +36,6 @@ do
     sudo gphoto2 --set-config bulb=1 --wait-event=$SHUTTER_OPEN_SECS --set-config bulb=0 --wait-event-and-download=5s
     sudo mv capt0000.jpg /home/tomc/pictures/$DATE-$i.jpg
 
-    printf "sleeping $WAIT seconds\n\n"
+    printf "sleeping $WAIT more seconds\n\n"
     sleep $WAIT
 done
