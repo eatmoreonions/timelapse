@@ -36,6 +36,8 @@ do
     sudo gphoto2 --set-config bulb=1 --wait-event=$SHUTTER_OPEN_SECS --set-config bulb=0 --wait-event-and-download=5s
     sudo mv capt0000.jpg /home/tomc/pictures/$DATE-$i.jpg
 
-    printf "sleeping $WAIT more seconds\n\n"
-    sleep $WAIT
+    if [ "$i" -lt "$NUMBER_OF_PICS" ]; then
+        printf "sleeping $WAIT more seconds\n\n"
+        sleep $WAIT
+    fi
 done
