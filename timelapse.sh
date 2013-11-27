@@ -34,6 +34,7 @@ for (( i=1; i<=$NUMBER_OF_PICS; i++))
 do 
     printf "taking picture\n"
     sudo gphoto2 --set-config bulb=1 --wait-event=$SHUTTER_OPEN_SECS --set-config bulb=0 --wait-event-and-download=5s
+    sudo cp capt0000.jpg /var/www/images
     sudo mv capt0000.jpg /home/tomc/pictures/$DATE-$i.jpg
 
     if [ "$i" -lt "$NUMBER_OF_PICS" ]; then
