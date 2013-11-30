@@ -28,13 +28,16 @@ sudo gphoto2 --set-config-index /main/imgsettings/iso=$ISO
 
 if [ "$MOUNT" == y ]; then 
     sudo mount /dev/mmcblk1p1 /home/tomc/pictures
+    sudo rm /home/tomc/pictures/*.jpg
 fi 
 
 for (( i=1; i<=$NUMBER_OF_PICS; i++))
 do 
-    printf "taking picture\n"
+    printf "taking picture number $i\n"
     sudo gphoto2 --set-config bulb=1 --wait-event=$SHUTTER_OPEN_SECS --set-config bulb=0 --wait-event-and-download=5s
-    sudo cp capt0000.jpg /var/www/images
+    if [ "$i" == 1 ]; then
+        sudo cp capt0000.jpg /var/www/images
+    fi 
     sudo mv capt0000.jpg /home/tomc/pictures/$DATE-$i.jpg
 
     if [ "$i" -lt "$NUMBER_OF_PICS" ]; then
@@ -42,3 +45,7 @@ do
         sleep $WAIT
     fi
 done
+
+if [ "$MOUNT" == y ]; then 
+    sudo umount /home/tomc/pictures
+fi
