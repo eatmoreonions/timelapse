@@ -20,8 +20,9 @@ def run():
   delay, number = getvars()
   
   for i in range(0, number):
+    if i > 0:
+      time.sleep(delay)
     print "taking picture number " + str(i+1)
     takepic()
-    time.sleep(delay)
 
 run()
