@@ -6,6 +6,7 @@ DATE=$(date +"%m%d%y")
 
 # prompt for setup information
 
+echo "If changing default options - backspace over default before entering choice"
 read -e -p "Mount sd card and save pictures to it? (y/n) " -i "y" MOUNT
 read -e -p "How many pictures in the series? " -i "75" NUMBER_OF_PICS
 read -e -p "How many seconds to wait between pictures? " -i "35" WAIT
